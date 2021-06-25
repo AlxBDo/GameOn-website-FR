@@ -66,7 +66,7 @@ class errorDisplay {
     if(infoBox){
       elementDomObj.parentNode.removeChild(infoBox);
     }
-  }
+  } 
 
   /**
    * displays the errors collected by errorHandler object
