@@ -8,192 +8,216 @@ function editNav() {
 }
 
 // DOM Elements
+const birthdateIpt = document.getElementById("birthdate");
 const closeBtn = document.querySelectorAll(".close");
+const emailIpt = document.getElementById("email");
+const firstNameIpt = document.getElementById("first");
 const formData = document.querySelectorAll(".formData");
+const lastNameIpt = document.getElementById("last");
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const modalSubmit = document.querySelector("form > .btn-submit");
+const quantityIpt = document.getElementById("quantity");
+const termsAndConditionBtn = document.getElementById("checkbox1-label");
+const termsAndConditionCheckbox = document.getElementById("checkbox1");
+
 
 // object
 
 /**
- * object composed of static methods allowing the display of error messages
+ * class composed of static methods retrieving the result of input checks and displaying it 
  */
-class errorDisplay {
+class formValidationHandler {
 
-  /**
-   * create in the parent element of the input a "p" element containing the error message
-   * @param {object} errorObj : javascript object 
-   * @returns {boolean} false : for stop focus
-   */
-  static createErrorReturnBox(errorObj, elementFocus = true){
-    // check existence of a "infoBox" element
-    if(!errorDisplay.getInfoBox(errorObj.element)){
-      let infoBox = document.createElement("p");
-      infoBox.setAttribute("id", errorDisplay.getIdInfoBox(errorObj.element));
-      infoBox.innerHTML = errorObj.msg;
-      infoBox.classList.add("error-info");
-      errorObj.element.parentNode.appendChild(infoBox);
-      if(elementFocus) { errorObj.element.focus(); }
-      return false;
-    } 
-  }
+  static location1Btn = document.getElementById("location1");
 
-  /**
-   * create DOM element to display error message
-   * @param {object} elementDomObj javascript object of DOM element
-   * @returns {object} javascript object of DOM element p.error-info
-   */
-  static getInfoBox(elementDomObj){
-    return document.getElementById(errorDisplay.getIdInfoBox(elementDomObj));
-  }
 
-  /**
-   * create the InfoBox html id with the input name passed as a parameter
-   * @param {object} elementDomObj javascript object of DOM element
-   * @returns {sting} : infoBox id html
-   */
-  static getIdInfoBox(elementDomObj){
-    return "infoBox-"+elementDomObj.getAttribute("name");
-  }
-
-  /**
-   * checks if infoBox exists and removes the DOM element if it does
-   * @param {object} elementDomObj javascript object of DOM element
-   */
-  static initInfoBox(elementDomObj){
-    let infoBox = errorDisplay.getInfoBox(elementDomObj);
-    if(infoBox){
-      elementDomObj.parentNode.removeChild(infoBox);
+  static autoValidation(inputObj){
+    let complementFonctionName = false;
+    // get input name to determinate function to call
+    let iptId = inputObj.getAttribute('id');
+    if( iptId === "birthdate" || iptId === "email" || iptId === "quantity"){
+      complementFonctionName = iptId;
+    } else if( iptId === "first" || iptId === "last" ){
+      complementFonctionName = "name";
+    }
+    if(complementFonctionName){
+      return this[complementFonctionName+"Validation"](inputObj);
     }
   }
 
   /**
-   * displays the errors collected by errorHandler object
-   * @param {object} errHdlrObj : class errorHandler
+   * check if input value matches to Birthdate's rules
+   * @param {object} inputObj javascript object of DOM element
+   * @param {string} complementFonctionName complement of the function's name to call
+   * @param {boolean} focusField true = input focus
    */
-  static print(errHdlrObj){
-    if(errHdlrObj instanceof errorHandler){
-      let elementFocus = true;
-      errHdlrObj.getErrors().forEach(function(err){
-        elementFocus = errorDisplay.createErrorReturnBox(err, elementFocus);
-      });
-    }
+  static inputValidation(inputObj, complementFonctionName, focusField = true){
+    return validationDisplay.apply(
+      inputObj, 
+      inputValidator["check"+complementFonctionName](inputObj.value),
+      focusField
+      );
   }
+
+  /**
+   * check if input value matches to Birthdate's rules
+   * @param {object} inputObj javascript object of DOM element
+   * @param {boolean} focusField true = input focus
+   */
+  static birthdateValidation(inputObj, focusField = true){ 
+    return this.inputValidation(inputObj, "Birthdate", focusField); 
+  }
+
+  /**
+   * check if input value matches to email's rules
+   * @param {object} inputObj javascript object of DOM element
+   * @param {boolean} focusField true = input focus
+   */
+  static emailValidation(inputObj, focusField = true){ 
+    return this.inputValidation(inputObj, "Mail", focusField); 
+  }
+
+  /**
+   * check if input value matches to location's rules
+   * @param {boolean} focusField true = input focus
+   */
+  static locationValidation(focusField = true){ 
+    return validationDisplay.apply(
+      this.location1Btn, 
+      inputValidator.checkLocation(), 
+      focusField
+    );
+  }
+
+  /**
+   * check if input value matches to name's rules (first & last)
+   * @param {object} inputObj javascript object of DOM element
+   * @param {boolean} focusField true = input focus
+   */
+  static nameValidation(inputObj, focusField = true){ 
+    return this.inputValidation(inputObj, "Name", focusField); 
+  }
+
+  /**
+   * check if input value matches to quantity's rules
+   * @param {object} inputObj javascript object of DOM element
+   * @param {boolean} focusField true = input focus
+   */
+  static quantityValidation(inputObj, focusField = true){ 
+    return this.inputValidation(inputObj, "Quantity", focusField); 
+  }
+
+  /**
+   * check if input value matches to location's rules
+   * @param {boolean} focusField true = input focus
+   */
+  static termsAndConditionsValidation(focusField = true, inverse = true){ 
+    return validationDisplay.apply(
+      termsAndConditionCheckbox, 
+      inverse ? termsAndConditionCheckbox.checked ? false : true : termsAndConditionCheckbox.checked, 
+      focusField
+    );
+  }
+  
 }
 
+/**
+ * class composed of static methods allowing to check input's values
+ */
+class inputValidator{
 
-class errorHandler {
-
-  checkedLocationRadioButton = document.querySelectorAll('input[name="location"]:checked');
-  errors = [];
-  openFields = document.querySelectorAll(
+  static checkedLocationRadioButton = document.querySelectorAll('input[name="location"]:checked');
+  static openFields = document.querySelectorAll(
                   "input[type = text], input[type = email], input[type = number], input[type = date]"
                 );
-  termsAndConditionCheckbox = document.getElementById("checkbox1");
-  
+
 
   /**
-    * collect form entry errors
-   * @param {object} inputObject : javascript object of a DOM input element
-   * @param {string} message : error return message for the user
-   * @param {boolean} addClassError : true = the class "err" is added to the input
+   * birthdate validation
+   * @param {string} birthdateToValidate (yyyy-mm-dd)
+   * @returns {boolean} true = is correct
    */
-  addError(inputObject, message, addClassError = false){
-    if(addClassError){ this.addErrorClassHtml(inputObject); }
-    this.addErrorMessage(inputObject, message);
+  static checkBirthdate(birthdateToValidate){
+    return /(^[0-9]{4}-{1}[0-9]{2}-{1}[0-9]{2}$)/.test(birthdateToValidate) ? true : false;
   }
 
   /**
-   * add ".err" class in html input element
-   * @param {object} inputObject 
+   * check if one of the location buttons is checked
+   * @returns {boolean} : true = is checked
    */
-  addErrorClassHtml(inputObject){
-    inputObject.classList.add("err");
+  static checkLocation(){
+    return this.checkedLocationRadioButton.length === 0 ? false : true;
   }
 
   /**
-   * adds an entry in the "errors" attribute array
-   * @param {string} elementObj javascript object of DOM input element
-   * @param {string} message error return message for the user
+   * email verification
+   * @param {string} emailToValidate 
+   * @returns {boolean} true = email is correct
    */
-  addErrorMessage(elementObj, message){
-    this.errors.push( { element: elementObj, msg: message } );
+  static checkMail(emailToValidate){
+    return /([\w-\.]+@[\w\.]+\.{1}[\w]+)/.test(emailToValidate) ? true : false;
   }
 
   /**
-   * check if errors found
-   * @returns {boolean} : true if errors found
+   * first name or last name verification
+   * @param {string} nameToValidate 
+   * @returns {boolean} true = email is correct
    */
-  errorFind(){
-    return this.errors.length > 0 ? true : false;
-  }
-
-  getErrors(){
-    return this.errors;
+  static checkName(nameToValidate){
+    return nameToValidate.length < 2 ? false : true;
   }
 
   /**
-   * checks that the open fields are not empty
-   * @param {object} input 
+   * check if input paramater is number
+   * @param {number} qtyToValidate 
+   * @returns {boolean} true = is number
+   */
+  static checkQuantity(qtyToValidate){
+    return isNaN(qtyToValidate) ? false : true;
+  }
+
+  /**
+   * check if input paramater is empty
+   * @param {string} inputToTest 
    * @return {boolean} true = empty
    */
-  isEmpty(input){
-    if(input.value === ""){
-      this.addError(
-        input, 
-        "Ce champ doit être renseigné",
-        true
-      )
-      return true;
-    }
-    return false;
+   static isEmpty(inputToTest){
+    return inputToTest === "" ? true : false;
   }
+
+}
+
+/**
+ * class composed of static methods allowing the display of validation process
+ */
+ class validationDisplay {
+
+  static errorHtmlClass = "error-ipt";
+  static validateHtmlClass = "valid-ipt";
+
 
   /**
-   * checks inputs text, email, number and date are correctly filled in
-   * @returns {boolean} : true = error find
+   * manage class to apply
+   * @param {object} inputObj javascript object of DOM element
+   * @param {boolean} resultValidation true = validation is correct
+   * @param {boolean} focusField true = input focus
    */
-  openFieldValidation(){
-    for(let ipt of this.openFields){
-      // if input value is empty -> error
-      if(!this.isEmpty(ipt)){
-        // otherwise, check that the first and last name contain at least 2 characters
-        let nameIpt = ipt.getAttribute("name");
-        if( (nameIpt === "first" || nameIpt === "last") && (ipt.value.length < 2) ){
-          this.addError(
-            ipt, 
-            "Votre "+ nameIpt === "first" ? "prénom" : "nom" +" doit comporter au moins 2 lettres."
-          );
-        }
-      } 
+  static apply(inputObj, resultValidation = true, focusField = false){
+    let classToApply = resultValidation 
+                     ? [this.validateHtmlClass, this.errorHtmlClass] 
+                     : [this.errorHtmlClass, this.validateHtmlClass] ;
+    let parentClassList = inputObj.parentNode.classList;
+    if(!parentClassList.contains(classToApply[0])){
+      parentClassList.add(classToApply[0]);
+      if(parentClassList.contains(classToApply[1])) {
+        parentClassList.remove(classToApply[1]);
+      }
     }
-    return this.errorFind();
+    if(focusField){ inputObj.focus(); }
+    return resultValidation;
   }
-
-  /**
-   * checks if any of the radio buttons are checked
-   * @returns {boolean} : true = error find
-   */
-  radioValidation(){
-    if(this.checkedLocationRadioButton.length === 0){
-      this.addErrorMessage(document.getElementById("location1"), "Vous devez choisir une ville.");
-    }
-    return this.errorFind();
-  }
-
-  /**
-   * checks if terms and conditions (checkbox1) are checked
-   * @returns {boolean} : true = error find
-   */
-  termsAndConditionsValidation(){
-    if(!this.termsAndConditionCheckbox.checked){
-      this.addErrorMessage(document.getElementById("checkbox1"), "Merci de valider les conditions générales.");
-      this.addErrorClassHtml(document.querySelector("label[for=checkbox1] > span"));
-    }
-    return this.errorFind();
-  }
-
+  
 }
 
 // close modal event
@@ -204,30 +228,45 @@ function closeModal(){
   modalbg.style.display = "none";
 }
 
-// Submit modal form
-function submitModal(event){
-  let errorHdlr = new errorHandler;
-  if(!errorHdlr.openFieldValidation()){
-    // checks that the closed fields
-      // radio
-    if(!errorHdlr.radioValidation()){
-      // checkbox1
-      if(!errorHdlr.termsAndConditionsValidation()){
-        alert('VALIDE !!!');
-        return true;
+/**
+ * form validation before send
+ * @param {object} event 
+ * @returns {boolean} true = is validate
+ */
+function validate(event){
+  // check first name input
+  if(formValidationHandler.nameValidation(firstNameIpt)){
+    // check last name input
+    if(formValidationHandler.nameValidation(lastNameIpt)){
+      // check email input
+      if(formValidationHandler.emailValidation(emailIpt)){
+        // check birthdate input
+        if(formValidationHandler.birthdateValidation(birthdateIpt)){
+          // check quantity input
+          if(formValidationHandler.quantityValidation(quantityIpt)){
+            // check location input if quantity > 0
+            if(quantityIpt.value > 0){ formValidationHandler.locationValidation(); }
+            // check terms and conditions are approuved
+            if(formValidationHandler.termsAndConditionsValidation(true, false)){
+              return true;
+            }
+          }
+        }
       }
     }
   }
-  errorDisplay.print(errorHdlr);
   event.preventDefault();
+  return false;
 }
 
 // input modal event
 document.querySelectorAll("input").forEach(function(ipt){
   ipt.addEventListener("change", function(){
-    errorDisplay.initInfoBox(ipt);
+    formValidationHandler.autoValidation(ipt);
   });
 });
+
+termsAndConditionBtn.addEventListener('click', formValidationHandler.termsAndConditionsValidation);
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -238,6 +277,6 @@ function launchModal() {
 }
 
 // submit modal event
- modalSubmit.addEventListener('click', submitModal);
+ modalSubmit.addEventListener('click', validate);
 
 

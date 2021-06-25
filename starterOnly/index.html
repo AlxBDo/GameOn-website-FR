@@ -72,6 +72,10 @@
                   minlength="2" 
                   required
                 /><br>
+                <p class="error-info">
+                  Merci de renseigner votre prénom. <br>
+                  <span>il doit se composer de 2 lettres minimum.</span>
+                </p>
               </div>
               <div
                 class="formData">
@@ -83,6 +87,10 @@
                   name="last" 
                   required
                 /><br>
+                <p class="error-info">
+                  Merci de renseigner votre votre. <br>
+                  <span>il doit se composer de 2 lettres minimum.</span>
+                </p>
               </div>
               <div
                 class="formData">
@@ -94,6 +102,9 @@
                   name="email" 
                   required
                 /><br>
+                <p class="error-info">
+                  Veuillez saisir une adresse courriel valide.
+                </p>
               </div>
               <div
                 class="formData">
@@ -104,6 +115,9 @@
                   id="birthdate"
                   name="birthdate"
                 /><br>
+                <p class="error-info">
+                  Nous avons aussi besoin de votre date de naissance.
+                </p>
               </div>
               <div
                 class="formData">
@@ -116,11 +130,15 @@
                   min="0" 
                   max="99" 
                   required
-                >
+                ><br>
+                <p class="error-info">
+                  Merci d'indiquer votre nombre de participation. <br>
+                  <span>Mettre 0 si c'est le première fois.</span>
+                </p>
               </div>
-              <p class="text-label">Quelles villes ?</p>
               <div
                 class="formData">
+                <p class="text-label">Quelles villes ?</p>
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -186,7 +204,10 @@
                 <label class="checkbox-label" for="location6">
                   <span class="checkbox-icon"></span>
                   Portland</label
-                >
+                ><br>
+                <p class="error-info">
+                  Pourriez-vous préciser la ville de votre dernière participation ?
+                </p>
               </div>
 
               <div
@@ -197,11 +218,14 @@
                   id="checkbox1"
                   required
                 />
-                <label class="checkbox2-label" for="checkbox1" required>
+                <label class="checkbox2-label" for="checkbox1" id="checkbox1-label" required>
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
-                <br>
+                <p class="error-info">
+                  Veuillez valider les conditions générales d'utilisation 
+                  pour finaliser votre inscription.
+                </p>
                 <input class="checkbox-input" type="checkbox" id="checkbox2" />
                 <label class="checkbox2-label" for="checkbox2">
                   <span class="checkbox-icon"></span>

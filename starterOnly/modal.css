@@ -420,7 +420,7 @@ input[data-error]::after {
   color: #fff;
   position: relative;
   text-align: left;
-  min-width: 424px;
+  width: 424px;
 }
 .hero-content::after {
   content: "";
@@ -487,6 +487,7 @@ footer {
     background: #fff;
     color: #000;
     padding: 20px;
+    max-width: 100%;
   }
   .hero-content::after {
     content: unset;
@@ -495,7 +496,7 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 4.5rem;
+    font-size: 4rem;
     white-space: normal;
   }
   .hero-text {
@@ -527,3 +528,49 @@ footer {
   }
 }
 
+
+/* Form validation return message */
+.checkbox2-label:last-of-type {
+	color: white;
+}
+form .formData:nth-of-type(4)::after {
+	bottom: 15px;
+}
+form .valid-ipt:not(:last-of-type)::after {
+	
+	transform: translateX(0);
+	transition: all 250ms;
+}
+.formData:not(:last-of-type)::after {
+	color: white;
+	content: "ok";
+	position: absolute;
+	bottom: 14px;
+	right: 0px;
+	background-color: #4cbb99;
+	font-size: small;
+	padding: 15px 15px 16px;
+	border-radius: 0 7px 7px 0;
+  transform: translateX(46px);
+  transition: all 250ms;
+}
+.formData {
+	position: relative;
+	overflow: hidden;
+}
+.formData.error-ipt:not(label.checkbox-label2), .formData.error-ipt input {
+	color: #fe142f;
+}
+.error-info {
+  font-size: small;
+  font-weight: normal;
+  transition: all 250ms;
+  opacity: 0;
+  height: 0;
+}
+.error-ipt .error-info {
+  opacity: 1;
+  height: auto;
+  transition: all 250ms;
+  border-bottom: 1px dashed;
+}
