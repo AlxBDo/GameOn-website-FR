@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Reservation</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="modal.css" />
+    <link rel="stylesheet" href="css/modal.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link
       href="https://fonts.googleapis.com/css?family=DM+Sans"
@@ -14,7 +14,7 @@
   <body>
     <div class="topnav" id="myTopnav">
       <div class="header-logo">
-        <img alt="logo" src="Logo.png" width="auto" height="auto" />
+        <img alt="logo" src="img/Logo.png" width="auto" height="auto" />
       </div>
       <div class="main-navbar">
         
@@ -44,7 +44,7 @@
           </button>
         </div>
         <div class="hero-img">
-          <img src="./bg_img.jpg" alt="img" />
+          <img src="./img/bg_img.jpg" alt="img" />
         </div>
         <button class="btn-signup modal-btn">
           je m'inscris
@@ -116,7 +116,8 @@
                   name="birthdate"
                 /><br>
                 <p class="error-info">
-                  Nous avons aussi besoin de votre date de naissance.
+                  Nous avons aussi besoin de votre date de naissance. <br>
+                  <span>Vous devez avoir entre 12 et 120 ans.</span>
                 </p>
               </div>
               <div
@@ -243,12 +244,27 @@
           </div>
         </div>
       </div>
+      <div id="confirmReservation">
+        <div id="validReserv">
+          <p>Merci <span id="firstNameReserv"></span> pour votre inscription.</p>
+          <p>Votre demande a bien été envoyée.</p>
+        </div>
+        <div id="errorReserv">
+          <p>Nous nous excusons mais une erreur est survenue lors de votre inscription.</p>
+          <p>Nous vous invitons à recommercer celle-ci ou nous <a href="#">contacter</a>.</p>
+        </div>
+      </div>
     </main>
     <footer>
       <p class="copyrights">
         Copyright 2014 - 2020, GameOn Inc.
       </p>
     </footer>
-    <script src="modal.js"></script>
+    
+    <script src="js/fct/editNav.js"></script>
+    <script src="js/obj/inputValidator.js"></script>
+    <script src="js/obj/validationDisplay.js"></script>
+    <script src="js/obj/formValidationHandler.js"></script>
+    <script src="js/modal.js"></script>
   </body>
 </html>
