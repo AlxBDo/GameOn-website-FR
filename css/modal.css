@@ -643,7 +643,7 @@ form .formData:nth-of-type(5)::after {
 	position: relative;
 	overflow: hidden;
 }
-.error-ipt:not(label.checkbox-label2), .error-ipt input {
+.error-ipt input, .error-ipt:not(label.checkbox-label2){
 	color: #fe142f;
 }
 .valid-ipt label {
