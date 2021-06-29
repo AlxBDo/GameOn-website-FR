@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   mode: "production",
   entry: {
-    app: "./modal.js"
+    app: "./js/modal.js"
   },
   output: {
     filename: "[name].bundle.js",
