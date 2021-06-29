@@ -21,7 +21,6 @@
       + "" + (today.getDay() < 10 ? "0"+(today.getDay() +1) : (today.getDay() +1))
       ;
     let bTVFomatted = birthdateToValidate.split("-").join(""); 
-      console.log("Date naissance : " + bTVFomatted +" \r et doit supp à "+ (parseInt(todayFormatted) - 1200000) );
     return /(^[0-9]{4}-{1}[0-9]{2}-{1}[0-9]{2}$)/.test(birthdateToValidate) 
             && (bTVFomatted < (parseInt(todayFormatted) - 119969) 
             && bTVFomatted > (parseInt(todayFormatted) - 1200000)) 

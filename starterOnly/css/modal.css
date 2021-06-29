@@ -48,7 +48,6 @@ img {
   padding: 12px 12px;
   margin: 5px;
   text-decoration: none;
-  font-size: 20px;
   font-family: Roboto, sans-serif;
 }
 
@@ -66,6 +65,10 @@ img {
 
 .topnav .icon {
   display: none;
+}
+
+@media screen and (min-width: 825px) {
+  .topnav a { font-size: 20px; }
 }
 
 @media screen and (max-width: 768px) {
@@ -238,6 +241,7 @@ input[data-error]::after {
   margin-left: 36px;
   font-size: 12px;
   font-weight: normal;
+  cursor: pointer;
 }
 .checkbox-label .checkbox-icon,
 .checkbox2-label .checkbox-icon {
@@ -478,6 +482,15 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
+@media screen and (max-width: 370px) {
+  .hero-headline { font-size: 3.5rem; }
+}
+@media screen and (min-width: 370px) and (max-width: 800px) {
+  .hero-headline { font-size: 4rem; }
+}
+@media screen and (min-width: 700px) and (max-width: 800px) {
+  .hero-content { width: unset; }
+}
 @media screen and (max-width: 800px) {
   .hero-section {
     display: block;
@@ -495,10 +508,7 @@ footer {
   .hero-content .btn-signup {
     display: none;
   }
-  .hero-headline {
-    font-size: 4rem;
-    white-space: normal;
-  }
+  .hero-headline { white-space: normal; }
   .hero-text {
     width: unset;
     font-size: 1.5rem;
@@ -516,6 +526,10 @@ footer {
     margin-top: 50px;
     text-align: center;
   }
+}
+
+@media screen and (min-width: 800px) and (max-width: 950px) {
+  .hero-headline { font-size: 5rem; }
 }
 
 @keyframes modalopen {
@@ -558,9 +572,9 @@ footer {
 	padding: 5%;
 	color: white;
 	text-align: center;
-	min-width: 330px;
+	min-width: 300px;
 	max-width: 700px;
-  border-radius: 50px;
+  border-radius: 35px;
 }
 #confirmReservation div:first-of-type {
   background-color: rgb(60, 60, 60);
@@ -599,6 +613,7 @@ footer {
 .error-ipt:last-of-type .error-info {
 	margin-bottom: 20px;
 }
+.error-ipt label, .error-ipt .text-label { animation: showLabelError 300ms ease-in-out 100ms; }
 form .formData:nth-of-type(5)::after {
 	top: 25px;
 }
@@ -639,6 +654,7 @@ form .valid-ipt:not(:last-of-type)::after {
   }
   30%{
     transform: translateY(0) rotate(20deg);
+    animation-timing-function: cubic-bezier(.89,.28,.85,.47);
   }
   60%{
     transform: translateY(-5%);
@@ -646,4 +662,17 @@ form .valid-ipt:not(:last-of-type)::after {
   100%{
     transform:  translateY(0) rotate(0deg);
   }
+}
+
+@keyframes showLabelError{
+	0%{
+		text-shadow: 0px 0px 0px grey;
+	}
+	50%{
+		text-shadow: 0px 0px 5px grey;
+    transform: scaleY(1.1);
+	}
+	100%{
+		text-shadow: 0px 0px 0px black;
+	}
 }

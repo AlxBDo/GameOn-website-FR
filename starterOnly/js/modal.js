@@ -25,8 +25,14 @@ function closeModal(){
   modalbg.style.display = "none";
 }
 
+/**
+ * select location radio input when user click label
+ * @param {object} labelChecked label html DOM 
+ */
 function selectLocation(labelChecked){
-  document.getElementById(labelChecked.getAttribute('for')).checked = true;
+  let radioIptChcked = document.getElementById(labelChecked.getAttribute('for'));
+  radioIptChcked.checked = true;
+  validationDisplay.classHtmlHandler(radioIptChcked);
 }
 
 
@@ -36,32 +42,89 @@ function selectLocation(labelChecked){
  * @returns {boolean} true = is validate
  */
  function validate(event){
-   let returnVal = false;
-  // check first name input
-  if(formValidationHandler.nameValidation(firstNameIpt)){
-    // check last name input
-    if(formValidationHandler.nameValidation(lastNameIpt)){
-      // check email input
-      if(formValidationHandler.emailValidation(emailIpt)){
-        // check birthdate input
-        if(formValidationHandler.birthdateValidation(birthdateIpt)){
-          // check quantity input
-          if(formValidationHandler.quantityValidation(quantityIpt)){
-            // check location input if quantity > 0
-            if(quantityIpt.value > 0){ formValidationHandler.locationValidation(); }
-            // check terms and conditions are approuved
-            if(
-              formValidationHandler.termsAndConditionsValidation(true, false) 
-              && (quantityIpt.value === 0 || formValidationHandler.locationValidation())
-              )
-              { return true; }
-          }
-        }
-      }
+
+  /**
+   * object used to call the methods for checking the form fields
+   */
+  class objectModel{
+
+    /**
+     * 
+     * @param {object} inputObj DOM element object
+     * @param {string} validationFunctionName 
+     * @param {string || null} validationFunctionParam 
+     * @param {string || boolean || null} conditionFunctionName 
+     */
+    constructor(
+        inputObj = null, 
+        validationFunctionName, 
+        validationFunctionParam = null, 
+        conditionFunctionName = null
+      ){
+      this.ipt = inputObj;
+      this.validFct = validationFunctionName+"Validation";
+      this.validFctParam = validationFunctionParam;
+      this.condition = conditionFunctionName;
     }
-  }
-  event.preventDefault();
-  return false;
+
+    /**
+     * Start form fields verification
+     * @returns {boolean} true is validate
+     */
+    check(){
+      return this.condition != null 
+              ? this[this.condition]() 
+              ? this.validationFctIpt(this.validFct, this.validFctParam) 
+              : true 
+              : this.validationFctIpt(this.validFct, this.validFctParam) ;
+    }
+
+    /**
+     * Location field conditional check
+     * @returns {boolean} true is validate
+     */
+    locaCondCheck(){ return parseInt(quantityIpt.value) > 0 ? true : false; }
+    
+    /**
+     * Call form fields verification methods
+     * @returns {boolean} true is validate
+     */
+    validationFctIpt(){ 
+      return this.inputObj === null 
+            ? formValidationHandler[this.validFct]() 
+            : this.validFctParam === null 
+            ? formValidationHandler[this.validFct](this.ipt) 
+            : formValidationHandler[this.validFct](this.ipt, this.validFctParam); 
+    }
+
+   }
+
+   /**
+    * form fields's array to check
+    */
+   let inputsToValidate = [
+    new objectModel(firstNameIpt, "name"), 
+    new objectModel(lastNameIpt, "name"), 
+    new objectModel(emailIpt, "email"), 
+    new objectModel(birthdateIpt, "birthdate"), 
+    new objectModel(quantityIpt, "quantity"), 
+    new objectModel(null, "location", null, "locaCondCheck"), 
+    new objectModel(true, "termsAndConditions", false), 
+   ];
+
+   /**
+    * browse the array to call the verification methods
+    * @returns {boolean} false if one of the checks fails
+    */
+   for( let iptTV of inputsToValidate){
+     if(!iptTV.check()){
+       event.preventDefault();
+       return false;
+     }
+   }
+
+   return true;
+
 }
 
 

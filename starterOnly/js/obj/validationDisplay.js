@@ -14,6 +14,18 @@
    * @param {boolean} focusField true = input focus
    */
   static apply(inputObj, resultValidation = true, focusField = false){
+    this.classHtmlHandler(inputObj, resultValidation);
+    // focus DOM element if validation return false
+    if(focusField && !resultValidation){ inputObj.focus(); }
+    return resultValidation;
+  }
+
+  /**
+   * add and remove html class
+   * @param {object} inputObj javascript object of DOM element
+   * @param {boolean} resultValidation true = validation is correct
+   */
+  static classHtmlHandler(inputObj, resultValidation = true){
     let classToApply = resultValidation 
                      ? [this.validateHtmlClass, this.errorHtmlClass] 
                      : [this.errorHtmlClass, this.validateHtmlClass] ;
@@ -24,8 +36,6 @@
         parentClassList.remove(classToApply[1]);
       }
     }
-    if(focusField){ inputObj.focus(); }
-    return resultValidation;
   }
   
 }
