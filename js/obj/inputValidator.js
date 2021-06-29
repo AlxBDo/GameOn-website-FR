@@ -50,7 +50,7 @@
    * @returns {boolean} true = email is correct
    */
   static checkName(nameToValidate){
-    return nameToValidate.length < 2 ? false : true;
+    return nameToValidate.length < 2 || !isNaN(nameToValidate) ? false : true;
   }
 
   /**

@@ -573,22 +573,19 @@ footer {
 #confirmReservation div {
 	width: 80%;
 	margin: 0 auto;
-	padding: 5%;
 	color: white;
 	text-align: center;
-	min-width: 300px;
-	max-width: 700px;
-  border-radius: 35px;
+	height: 80%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 5%;
 }
 #confirmReservation div:first-of-type {
   background-color: rgb(60, 60, 60);
 }
 #confirmReservation div:last-of-type {
   display: none;
-}
-#confirmReservation.valid div:first-of-type {
-	animation: confirmReceipt 500ms ease-out 200ms;
-  animation-fill-mode: both;
 }
 #confirmReservation div p:first-of-type {
 	font-size: xx-large;
