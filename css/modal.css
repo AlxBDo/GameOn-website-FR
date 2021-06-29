@@ -623,7 +623,7 @@ form .formData:nth-of-type(5)::after {
 }
 .modal-body form .valid-ipt::after {
 	transform: translateX(0) rotate(45deg);
-	transition: all 250ms linear 50 ms;
+	transition: all 250ms 50ms;
 }
 .formData:not(:last-of-type)::after {
 	content: "";
@@ -643,7 +643,7 @@ form .formData:nth-of-type(5)::after {
 	position: relative;
 	overflow: hidden;
 }
-.formData.error-ipt:not(.checkbox-label2:last-of-type), .formData.error-ipt input {
+.error-ipt:not(label.checkbox-label2), .error-ipt input {
 	color: #fe142f;
 }
 .valid-ipt label {
