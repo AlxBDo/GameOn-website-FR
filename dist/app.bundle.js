@@ -1,1 +1,0 @@
-(()=>{"use strict";document.querySelectorAll('input[name="location"]:checked'),document.querySelectorAll("input[type = text], input[type = email], input[type = number], input[type = date]")})();

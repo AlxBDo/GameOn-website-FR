@@ -1,3 +1,5 @@
+import editNav from "./fct/editNav.js";
+
 //-- CONSTANTES
 
 // DOM Elements
