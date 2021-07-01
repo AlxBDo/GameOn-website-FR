@@ -142,7 +142,7 @@ closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 // input modal event
 document.querySelectorAll("input").forEach(function(ipt){
     ipt.addEventListener("change", function(){
-        formValidationHandler.autoValidation(ipt);
+        return formValidationHandler.autoValidation(ipt);
     });
 });
 
