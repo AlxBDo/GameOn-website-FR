@@ -1,14 +1,15 @@
 import editNav from "./fct/editNav.js";
+import formValidationHandler from "./obj/formValidationHandler.js";
+import validationDisplay from "./obj/validationDisplay.js";
+
 
 //-- CONSTANTES
 
 // DOM Elements
 const birthdateIpt = document.getElementById("birthdate");
 const closeBtn = document.querySelectorAll(".close");
-const confirmReservation = document.getElementById("confirmReservation");
 const emailIpt = document.getElementById("email");
 const firstNameIpt = document.getElementById("first");
-const firstNameReservSpan = document.getElementById("firstNameReserv");
 const formData = document.querySelectorAll(".formData");
 const lastNameIpt = document.getElementById("last");
 const locationLabel = document.querySelectorAll(".checkbox-label");
@@ -17,7 +18,6 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const modalSubmit = document.querySelector("form > .btn-submit");
 const quantityIpt = document.getElementById("quantity");
 const termsAndConditionBtn = document.getElementById("checkbox1-label");
-const termsAndConditionCheckbox = document.getElementById("checkbox1");
 
 
 //-- FUNCTIONS

@@ -1,7 +1,12 @@
+import inputValidator from "./inputValidator.js";
+import validationDisplay from "./validationDisplay.js";
+
+const termsAndConditionCheckbox = document.getElementById("checkbox1");
+
 /**
  * class composed of static methods retrieving the result of input checks and displaying it 
  */
- class formValidationHandler {
+ export default class formValidationHandler {
 
   static location1Btn = document.getElementById("location1");
 
@@ -87,11 +92,7 @@
     if(url.split('?')[1]){
       let getParams = new URLSearchParams(url.split('?')[1]);
       if(getParams.has("first")){
-        firstNameReservSpan.innerHTML = getParams.get("first");
-        confirmReservation.classList.add("valid");
-        setTimeout(function(){
-          confirmReservation.classList.remove("valid");
-        }, 3000);
+        validationDisplay.confirmationReceiptMessage(getParams.get("first"));
       }
     }
   }
@@ -103,7 +104,11 @@
   static termsAndConditionsValidation(focusField = true, inverse = true){ 
     return validationDisplay.apply(
       termsAndConditionCheckbox, 
-      inverse ? termsAndConditionCheckbox.checked ? false : true : termsAndConditionCheckbox.checked, 
+      inverse 
+      ? termsAndConditionCheckbox.checked 
+      ? false 
+      : true 
+      : termsAndConditionCheckbox.checked, 
       focusField
     );
   }

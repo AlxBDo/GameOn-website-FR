@@ -1,7 +1,7 @@
 /**
  * class composed of static methods allowing to check input's values
  */
- class inputValidator {
+ export default class inputValidator {
 
   static checkedLocationRadioButton = document.querySelectorAll('input[name="location"]:checked');
   static openFields = document.querySelectorAll(

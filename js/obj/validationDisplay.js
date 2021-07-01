@@ -1,9 +1,11 @@
 /**
  * class composed of static methods allowing the display of validation process
  */
- class validationDisplay {
+ export default class validationDisplay {
 
+  static confirmReservation = document.getElementById("confirmReservation");
   static errorHtmlClass = "error-ipt";
+  static firstNameReservSpan = document.getElementById("firstNameReserv");
   static validateHtmlClass = "valid-ipt";
 
 
@@ -36,6 +38,14 @@
         parentClassList.remove(classToApply[1]);
       }
     }
+  }
+
+  static confirmationReceiptMessage(firstName){
+    this.firstNameReservSpan.innerHTML = firstName;
+        this.confirmReservation.classList.add("valid");
+        setTimeout(function(){
+          this.confirmReservation.classList.remove("valid");
+        }, 3000);
   }
   
 }
