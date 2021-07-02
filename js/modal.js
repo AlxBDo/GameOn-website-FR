@@ -7,14 +7,15 @@ import validationDisplay from "./obj/validationDisplay.js";
 
 // DOM Elements
 const birthdateIpt = document.getElementById("birthdate");
+const burgerNav = document.querySelector(".icon");
 const closeBtn = document.querySelectorAll(".close");
 const emailIpt = document.getElementById("email");
 const firstNameIpt = document.getElementById("first");
-const formData = document.querySelectorAll(".formData");
 const lastNameIpt = document.getElementById("last");
 const locationLabel = document.querySelectorAll(".checkbox-label");
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
+const modalForm = document.querySelector(".modal-body form");
 const modalSubmit = document.querySelector("form > .btn-submit");
 const quantityIpt = document.getElementById("quantity");
 const termsAndConditionBtn = document.getElementById("checkbox1-label");
@@ -135,6 +136,9 @@ function selectLocation(labelChecked){
 // body onload
 window.addEventListener('load', formValidationHandler.reservationReceiptValidation);
 
+// burger nav icon
+burgerNav.addEventListener('click', editNav);
+
 // close modal event
 closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 
@@ -161,6 +165,9 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
 modalbg.style.display = "block";
 }
+
+// Form modal event
+modalForm.addEventListener('submit', validate);
 
 // submit modal event
 modalSubmit.addEventListener('click', validate);
